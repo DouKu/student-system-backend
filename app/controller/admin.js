@@ -25,7 +25,7 @@ class AdminController extends Controller {
       },
     });
     if (admin) {
-      const token = service.user.createToken({ id: admin.id });
+      const token = service.auth.createToken({ id: admin.id });
       ctx.body = {
         admin,
         token,

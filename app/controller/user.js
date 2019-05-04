@@ -25,7 +25,7 @@ class UserController extends Controller {
       },
     });
     if (user) {
-      const token = service.user.createToken({ id: user.id });
+      const token = service.auth.createToken({ id: user.id });
       ctx.body = {
         user,
         token,

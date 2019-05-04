@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 
-class UserService extends Service {
+class AuthService extends Service {
 
   createToken(data) {
     const { app } = this;
@@ -30,4 +30,4 @@ class UserService extends Service {
 
 }
 
-module.exports = UserService;
+module.exports = AuthService;
