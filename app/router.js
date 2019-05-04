@@ -15,6 +15,7 @@ module.exports = app => {
       name: 'admin::',
       prefix: '/admin',
     }, router => {
+      // 管理员登录
       router.post('/signin', controller.admin.admin.signin);
       // 认证路由
       router.group({
@@ -22,9 +23,13 @@ module.exports = app => {
         prefix: '/auth',
         middlewares: [ jwt, admin ],
       }, router => {
-        // 获取用户列表
-        // 更新单个用户信息
-        // 批量导入excel更新用户信息
+        // 获取学生列表
+        router.get('/users', controller.admin.user.index);
+        // 更新单个学生信息
+        router.put('/user', controller.admin.user.update);
+        // 添加单个学生
+        router.post('/user', controller.admin.user.create);
+        // TODO: 批量导入excel更新用户信息
       });
     });
 
@@ -33,6 +38,7 @@ module.exports = app => {
       name: 'user::',
       prefix: '/user',
     }, router => {
+      // 学生登录
       router.post('/signin', controller.user.user.signin);
       // 认证路由
       router.group({
@@ -40,6 +46,10 @@ module.exports = app => {
         prefix: '/auth',
         middlewares: [ jwt ],
       }, router => {
+        // 学生更新个人信息
+        router.put('/user', controller.user.user.update);
+        // 学生获取个人信息
+        router.get('/user', controller.user.user.get);
       });
     });
 

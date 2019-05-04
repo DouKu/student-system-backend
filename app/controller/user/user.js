@@ -3,6 +3,7 @@
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
+  // 学生登录
   async signin() {
     const { ctx, service, app } = this;
     const { Sequelize } = app;
@@ -35,12 +36,42 @@ class UserController extends Controller {
     if (user) {
       const token = service.auth.createToken({ id: user.id });
       ctx.body = {
-        user,
+        id: user.id,
         token,
       };
     } else {
       ctx.body = 'user not found';
     }
+  }
+  // 学生修改个人信息
+  async update() {
+    const { ctx } = this;
+    const { userId } = ctx;
+    const body = ctx.request.body;
+    ctx.validate({
+      name: {
+        require: true,
+        type: 'string',
+      },
+    }, body);
+    const user = await ctx.model.User.findById(userId);
+    if (!user) {
+      ctx.status = 403;
+      return;
+    }
+    await user.update(body);
+    ctx.body = user;
+  }
+  // 学生获取个人信息
+  async get() {
+    const { ctx } = this;
+    const { query } = ctx;
+    const user = await ctx.model.User.findById(query.id);
+    if (!user) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = user;
   }
 }
 

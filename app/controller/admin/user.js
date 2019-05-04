@@ -3,7 +3,7 @@
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
-  // 创建单个用户
+  // 添加当个学生
   async create() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -17,7 +17,7 @@ class UserController extends Controller {
     const user = await ctx.model.User.create(body);
     ctx.body = user;
   }
-  // 更新用户信息
+  // 更新学生信息
   async update() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -35,6 +35,15 @@ class UserController extends Controller {
     }
     await user.update(body);
     ctx.body = user;
+  }
+  // 获取学生列表
+  async index() {
+    const { ctx } = this;
+    const { query } = ctx;
+    const users = await ctx.model.User.findAll({
+      where: query,
+    });
+    ctx.body = users;
   }
 }
 
