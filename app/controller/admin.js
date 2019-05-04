@@ -7,9 +7,9 @@ class AdminController extends Controller {
     const { ctx, service } = this;
     const body = ctx.request.body;
     ctx.validate({
-      email: {
+      name: {
         required: true,
-        type: 'email',
+        type: 'string',
       },
       password: {
         required: true,
@@ -18,22 +18,22 @@ class AdminController extends Controller {
       },
     }, body);
 
-    const user = await ctx.model.User.findOne({
+    const admin = await ctx.model.Admin.findOne({
       where: {
-        email: body.email,
+        email: body.name,
         password: body.password,
       },
     });
-    if (user) {
-      const token = service.user.createToken({ id: user.id });
+    if (admin) {
+      const token = service.user.createToken({ id: admin.id });
       ctx.body = {
-        user,
+        admin,
         token,
         status: 'ok',
-        currentAuthority: 'user',
+        currentAuthority: 'admin',
       };
     } else {
-      ctx.body = 'user not found';
+      ctx.body = 'admin not found';
     }
   }
 }

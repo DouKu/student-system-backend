@@ -14,6 +14,7 @@ module.exports = app => {
       name: 'admin::',
       prefix: '/admin',
     }, router => {
+      router.post('/signin', controller.admin.signin);
     });
 
     // 用户路由
