@@ -3,6 +3,7 @@
 module.exports = app => {
   const { router, controller } = app;
   const jwt = app.middleware.jwt();
+  const admin = app.middleware.admin();
 
   router.get('/', controller.home.index);
 
@@ -15,6 +16,16 @@ module.exports = app => {
       prefix: '/admin',
     }, router => {
       router.post('/signin', controller.admin.signin);
+      // 认证路由
+      router.group({
+        name: 'auth::',
+        prefix: '/auth',
+        middlewares: [ jwt, admin ],
+      }, router => {
+        // 获取用户列表
+        // 更新单个用户信息
+        // 批量导入excel更新用户信息
+      });
     });
 
     // 用户路由
@@ -23,14 +34,13 @@ module.exports = app => {
       prefix: '/user',
     }, router => {
       router.post('/signin', controller.user.signin);
-    });
-
-    // 认证路由
-    router.group({
-      name: 'auth::',
-      prefix: '/auth',
-      middlewares: [ jwt ],
-    }, router => {
+      // 认证路由
+      router.group({
+        name: 'auth::',
+        prefix: '/auth',
+        middlewares: [ jwt ],
+      }, router => {
+      });
     });
 
   });
