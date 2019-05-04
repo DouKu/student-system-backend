@@ -15,12 +15,12 @@ module.exports = appInfo => {
     host: '127.0.0.1',
     port: 3306,
     password: 'lgy',
-    database: 'photolive',
+    database: 'student-sys',
   };
 
   // jwt
   config.jwt = {
-    secret: 'photolive',
+    secret: 'student-sys',
   };
 
   config.cors = {
