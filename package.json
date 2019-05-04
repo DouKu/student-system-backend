@@ -1,7 +1,7 @@
 {
-  "name": "photolive-backend",
+  "name": "student-sys",
   "version": "1.0.0",
-  "description": "photolive-backend",
+  "description": "student-sys",
   "private": true,
   "dependencies": {
     "await-stream-ready": "^1.0.1",
