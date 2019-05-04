@@ -29,8 +29,6 @@ class AdminController extends Controller {
       ctx.body = {
         admin,
         token,
-        status: 'ok',
-        currentAuthority: 'admin',
       };
     } else {
       ctx.body = 'admin not found';

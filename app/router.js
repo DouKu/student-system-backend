@@ -15,7 +15,7 @@ module.exports = app => {
       name: 'admin::',
       prefix: '/admin',
     }, router => {
-      router.post('/signin', controller.admin.signin);
+      router.post('/signin', controller.admin.admin.signin);
       // 认证路由
       router.group({
         name: 'auth::',
@@ -33,7 +33,7 @@ module.exports = app => {
       name: 'user::',
       prefix: '/user',
     }, router => {
-      router.post('/signin', controller.user.signin);
+      router.post('/signin', controller.user.user.signin);
       // 认证路由
       router.group({
         name: 'auth::',

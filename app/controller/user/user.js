@@ -4,12 +4,16 @@ const Controller = require('egg').Controller;
 
 class UserController extends Controller {
   async signin() {
-    const { ctx, service } = this;
+    const { ctx, service, app } = this;
+    const { Sequelize } = app;
+    const { Op } = Sequelize;
     const body = ctx.request.body;
     ctx.validate({
-      email: {
-        required: true,
-        type: 'email',
+      id_card: {
+        type: 'string',
+      },
+      sutdent_id: {
+        type: 'int',
       },
       password: {
         required: true,
@@ -20,17 +24,19 @@ class UserController extends Controller {
 
     const user = await ctx.model.User.findOne({
       where: {
-        email: body.email,
+        [Op.or]: [
+          { id_card: body.id_card },
+          { authorId: body.sutdent_id },
+        ],
         password: body.password,
       },
     });
+
     if (user) {
       const token = service.auth.createToken({ id: user.id });
       ctx.body = {
         user,
         token,
-        status: 'ok',
-        currentAuthority: 'user',
       };
     } else {
       ctx.body = 'user not found';
