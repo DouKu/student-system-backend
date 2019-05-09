@@ -6,7 +6,7 @@ module.exports = () => {
     const admin = await ctx.model.Admin.findOne({
       where: {
         id,
-        role: 'admin',
+        role: 0,
       },
     });
     if (!admin) {

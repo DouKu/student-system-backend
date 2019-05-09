@@ -20,7 +20,7 @@ class AdminController extends Controller {
 
     const admin = await ctx.model.Admin.findOne({
       where: {
-        email: body.name,
+        name: body.name,
         password: body.password,
       },
     });

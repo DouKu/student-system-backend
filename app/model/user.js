@@ -16,14 +16,10 @@ module.exports = app => {
     is_dorm: INTEGER, // 是否内宿
     address: STRING, // 家庭住址
     graduated_school: STRING, // 毕业学校
-    f_name: STRING, // 父亲姓名
-    f_tel_num: STRING, // 父亲电话号码
-    f_id_card: STRING, // 父亲身份证
-    m_name: STRING, // 母亲姓名
-    m_tel_num: STRING, // 母亲电话号码
-    m_id_card: STRING, // 母亲身份证
+    guardian_name: STRING(30), // 监护人姓名
+    guardian_tel_num: STRING, // 监护人电话号码
+    guardian_id_card: STRING, // 监护人身份证
     created_at: DATE,
-    updated_at: DATE,
   });
 
   return User;
