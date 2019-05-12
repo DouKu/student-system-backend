@@ -1,26 +1,27 @@
-drop table if exists `User`;
-create table User (
-	`id`            int not null primary key auto_increment comment '递增ID',
-	`name`		    varchar(30) not null comment '姓名',
-	`sutdent_id`      int not null comment '学号',
-	`sex`         int not null default 0 comment '性别 0 未配置 1 男 2 女',
-	`email`          varchar(255) not null default '' comment '邮箱',
-	`id_card`		varchar(255) not null default '' comment '身份证',
-	`password`	    varchar(255) not null default '' comment '密码',
+drop table if exists `Users`;
+create table Users (
+	`id`                int not null primary key auto_increment comment '递增ID',
+  `name`		          varchar(30) not null comment '姓名',
+	`student_id`        varchar(255) not null comment '学号',
+	`sex`               int not null default 0 comment '性别 0 未配置 1 男 2 女',
+	-- `email`             varchar(255) not null default '' comment '邮箱',
+	`id_card`		        varchar(255) not null default '' comment '身份证',
+	`password`	        varchar(255) not null comment '密码',
 	`account_location` 	varchar(255) not null default '' comment '户口所在地',
-	`tel_num` 	varchar(255) not null default '' comment '电话号码',
-	`is_dorm` 	int not null default 0 comment '是否内宿 0 否 1 是',
-	`address` 	varchar(255) not null default ''  comment '家庭住址',
+	`tel_num` 	        varchar(255) not null default '' comment '电话号码',
+	`is_dorm` 	        int not null default 0 comment '是否内宿 0 否 1 是',
+	`address` 	        varchar(255) not null default ''  comment '家庭住址',
 	`graduated_school` 	varchar(255) not null default '' comment '毕业学校',
-	`guardian_name` 	varchar(30) not null default '' comment '监护人姓名',
+	`guardian_name` 	  varchar(30) not null default '' comment '监护人姓名',
 	`guardian_tel_num` 	varchar(255) not null default '' comment '监护人电话号码',
 	`guardian_id_card` 	varchar(255) not null default '' comment '监护人身份证',
-	`created_at` 	timestamp not null DEFAULT CURRENT_TIMESTAMP comment '创建时间',
+	`created_at` 				timestamp not null DEFAULT CURRENT_TIMESTAMP comment '创建时间',
+	`updated_at` 				timestamp not null DEFAULT CURRENT_TIMESTAMP comment '更新时间',
 
 	key `name` (`name`),
-	key `sutdent_id` (`sutdent_id`),
+	key `student_id` (`student_id`),
 	key `sex` (`sex`),
-	key `email` (`email`),
+	-- key `email` (`email`),
 	key `id_card` (`id_card`),
 	key `password` (`password`),
 	key `account_location` (`account_location`),
@@ -31,5 +32,6 @@ create table User (
 	key `guardian_name` (`guardian_name`),
 	key `guardian_tel_num` (`guardian_tel_num`),
 	key `guardian_id_card` (`guardian_id_card`),
-	key `created_at` (`created_at`)
+	key `created_at` (`created_at`),
+	key `updated_at` (`updated_at`)
 ) engine=innodb default charset=utf8 collate=utf8_general_ci comment='用户信息';

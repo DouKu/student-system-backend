@@ -10,38 +10,34 @@ class UserController extends Controller {
     const { Op } = Sequelize;
     const body = ctx.request.body;
     ctx.validate({
-      id_card: {
+      account: {
+        required: true,
         type: 'string',
-      },
-      sutdent_id: {
-        type: 'int',
       },
       password: {
         required: true,
-        min: 8,
-        type: 'password',
+        type: 'string',
       },
     }, body);
-
+    console.log(body, 'fff');
     const user = await ctx.model.User.findOne({
       where: {
         [Op.or]: [
-          { id_card: body.id_card },
-          { authorId: body.sutdent_id },
+          { id_card: body.account },
+          { student_id: body.account },
         ],
         password: body.password,
       },
     });
-
-    if (user) {
-      const token = service.auth.createToken({ id: user.id });
-      ctx.body = {
-        id: user.id,
-        token,
-      };
-    } else {
-      ctx.body = 'user not found';
+    if (!user) {
+      ctx.status = 404;
+      return;
     }
+    const token = service.auth.createToken({ id: user.id });
+    ctx.body = {
+      id: user.id,
+      token,
+    };
   }
   // 学生修改个人信息
   async update() {

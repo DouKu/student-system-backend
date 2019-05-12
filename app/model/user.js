@@ -6,9 +6,9 @@ module.exports = app => {
   const User = app.model.define('User', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     name: STRING(30), // 姓名
-    sutdent_id: INTEGER, // 学号
+    student_id: STRING, // 学号
     sex: INTEGER, // 性别
-    email: STRING, // 邮箱
+    // email: STRING, // 邮箱
     id_card: STRING, // 身份证
     password: STRING, // 密码
     account_location: STRING, // 户口所在地
@@ -20,6 +20,7 @@ module.exports = app => {
     guardian_tel_num: STRING, // 监护人电话号码
     guardian_id_card: STRING, // 监护人身份证
     created_at: DATE,
+    updated_at: DATE,
   });
 
   return User;
