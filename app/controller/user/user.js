@@ -105,7 +105,19 @@ class UserController extends Controller {
   async get() {
     const { ctx } = this;
     const { userId } = ctx;
-    const user = await ctx.model.User.findById(userId);
+    const user = await ctx.model.User.findOne({
+      where: {
+        id: userId,
+      },
+      attributes: {
+        exclude: [
+          'id',
+          'password',
+          'created_at',
+          'updated_at',
+        ],
+      },
+    });
     if (!user) {
       ctx.status = 404;
       return;
