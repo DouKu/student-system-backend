@@ -7,8 +7,7 @@ module.exports = app => {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     name: STRING(30), // 姓名
     student_id: STRING, // 学号
-    sex: INTEGER, // 性别
-    // email: STRING, // 邮箱
+    sex: STRING, // 性别
     id_card: STRING, // 身份证
     password: STRING, // 密码
     account_location: STRING, // 户口所在地
@@ -19,6 +18,8 @@ module.exports = app => {
     guardian_name: STRING(30), // 监护人姓名
     guardian_tel_num: STRING, // 监护人电话号码
     guardian_id_card: STRING, // 监护人身份证
+    first_subject: STRING, // 科目信息一
+    second_subject: STRING, // 科目信息二
     created_at: DATE,
     updated_at: DATE,
   });

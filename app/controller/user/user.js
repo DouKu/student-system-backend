@@ -19,7 +19,6 @@ class UserController extends Controller {
         type: 'string',
       },
     }, body);
-    console.log(body, 'fff');
     const user = await ctx.model.User.findOne({
       where: {
         [Op.or]: [
@@ -49,20 +48,64 @@ class UserController extends Controller {
         require: true,
         type: 'string',
       },
+      sex: {
+        require: true,
+        type: 'string',
+      },
+      tel_num: {
+        require: true,
+        type: 'string',
+      },
+      address: {
+        require: true,
+        type: 'string',
+      },
+      account_location: {
+        require: true,
+        type: 'string',
+      },
+      is_dorm: {
+        require: true,
+        type: 'string',
+      },
+      guardian_name: {
+        require: true,
+        type: 'string',
+      },
+      guardian_tel_num: {
+        require: true,
+        type: 'string',
+      },
+      guardian_id_card: {
+        require: true,
+        type: 'string',
+      },
+      first_subject: {
+        require: true,
+        type: 'string',
+      },
+      second_subject: {
+        require: true,
+        type: 'array',
+      },
     }, body);
+
+    const data = Object.assign({}, body);
+    data.second_subject = data.second_subject.join(',');
+
     const user = await ctx.model.User.findById(userId);
     if (!user) {
       ctx.status = 403;
       return;
     }
-    await user.update(body);
+    await user.update(data);
     ctx.body = user;
   }
   // 学生获取个人信息
   async get() {
     const { ctx } = this;
-    const { query } = ctx;
-    const user = await ctx.model.User.findById(query.id);
+    const { userId } = ctx;
+    const user = await ctx.model.User.findById(userId);
     if (!user) {
       ctx.status = 404;
       return;
