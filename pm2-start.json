@@ -1,0 +1,9 @@
+{
+  "apps": [
+      {
+          "name": "studentsys",
+          "script": "npm",
+          "args" : "start"
+      }
+  ]
+}
