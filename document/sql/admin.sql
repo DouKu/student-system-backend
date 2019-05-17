@@ -11,5 +11,5 @@ create table Admins (
 	key `name` (`name`),
 	key `password` (`password`),
 	key `created_at` (`created_at`),
-	key `updated_at` (`updated_at`),
+	key `updated_at` (`updated_at`)
 ) engine=innodb default charset=utf8 collate=utf8_general_ci comment='管理员信息';
