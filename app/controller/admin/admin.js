@@ -7,7 +7,7 @@ class AdminController extends Controller {
     const { ctx, service } = this;
     const body = ctx.request.body;
     ctx.validate({
-      name: {
+      account: {
         required: true,
         type: 'string',
       },
@@ -20,7 +20,7 @@ class AdminController extends Controller {
 
     const admin = await ctx.model.Admin.findOne({
       where: {
-        name: body.name,
+        name: body.account,
         password: body.password,
       },
     });

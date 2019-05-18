@@ -42,6 +42,13 @@ class UserController extends Controller {
     const { query } = ctx;
     const users = await ctx.model.User.findAll({
       where: query,
+      attributes: {
+        exclude: [
+          'password',
+          'created_at',
+          'updated_at',
+        ],
+      },
     });
     ctx.body = users;
   }
