@@ -1,6 +1,11 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const md5 = require('md5');
+const sendToWormhole = require('stream-wormhole');
+const awaitWriteStream = require('await-stream-ready').write;
+const path = require('path');
+const fs = require('fs-extra');
 
 class UserController extends Controller {
   // 添加当个学生
@@ -51,6 +56,27 @@ class UserController extends Controller {
       },
     });
     ctx.body = users;
+  }
+  // 批量导入学生信息
+  async import() {
+    const { ctx } = this;
+    const stream = await ctx.getFileStream();
+    const filename = md5(stream.filename) + path
+      .extname(stream.filename)
+      .toLocaleLowerCase();
+    const target = path.join(this.config.baseDir, 'app/public/uploads', filename);
+    const writeStream = fs.createWriteStream(target);
+    try {
+      await awaitWriteStream(stream.pipe(writeStream));
+    } catch (err) {
+      await sendToWormhole(stream);
+      throw err;
+    }
+    // 文件响应
+    ctx.body = {
+      url: '/public/uploads/' + filename,
+    };
+
   }
 }
 

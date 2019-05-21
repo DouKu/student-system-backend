@@ -29,7 +29,8 @@ module.exports = app => {
         router.put('/user', controller.admin.user.update);
         // 添加单个学生
         router.post('/user', controller.admin.user.create);
-        // TODO: 批量导入excel更新用户信息
+        // 批量导入excel更新用户信息
+        router.post('/user/import', controller.admin.user.import);
       });
     });
 

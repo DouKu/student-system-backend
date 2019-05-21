@@ -40,6 +40,8 @@ module.exports = appInfo => {
       '.jpg',
       '.svg',
       '.gif',
+      '.doc',
+      '.docx',
     ],
   };
 
