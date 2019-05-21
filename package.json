@@ -19,6 +19,7 @@
     "fs-extra": "^7.0.1",
     "md5": "^2.2.1",
     "mysql2": "^1.6.4",
+    "node-xlsx": "^0.15.0",
     "stream-wormhole": "^1.1.0"
   },
   "devDependencies": {

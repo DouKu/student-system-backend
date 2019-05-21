@@ -36,12 +36,8 @@ module.exports = appInfo => {
 
   config.multipart = {
     whitelist: [
-      '.png',
-      '.jpg',
-      '.svg',
-      '.gif',
-      '.doc',
-      '.docx',
+      '.xls',
+      '.xlsx',
     ],
   };
 

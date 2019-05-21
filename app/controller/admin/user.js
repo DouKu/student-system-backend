@@ -6,6 +6,7 @@ const sendToWormhole = require('stream-wormhole');
 const awaitWriteStream = require('await-stream-ready').write;
 const path = require('path');
 const fs = require('fs-extra');
+const nodeXlsx = require('node-xlsx');
 
 class UserController extends Controller {
   // 添加当个学生
@@ -64,7 +65,7 @@ class UserController extends Controller {
     const filename = md5(stream.filename) + path
       .extname(stream.filename)
       .toLocaleLowerCase();
-    const target = path.join(this.config.baseDir, 'app/public/uploads', filename);
+    const target = path.join(this.config.baseDir, 'app/.tmp/', filename);
     const writeStream = fs.createWriteStream(target);
     try {
       await awaitWriteStream(stream.pipe(writeStream));
@@ -72,12 +73,41 @@ class UserController extends Controller {
       await sendToWormhole(stream);
       throw err;
     }
-    // 文件响应
-    ctx.body = {
-      url: '/public/uploads/' + filename,
-    };
-
+    try {
+      const excel = nodeXlsx.parse(target);
+      const sheet = excel[0].data;
+      sheet.shift();
+      const users = sheet.map(msg => {
+        return {
+          name: msg[0],
+          id_card: msg[1],
+          student_id: msg[2],
+          sex: msg[3],
+          password: msg[1].substr(msg[1].length - 6),
+        };
+      });
+      users.forEach(async user => {
+        const res = await ctx.model.User.findOne({
+          where: {
+            id_card: user.id_card,
+          },
+        });
+        if (!res) {
+          await ctx.model.User.create(user);
+        } else {
+          await res.update(user);
+        }
+      });
+      ctx.body = 200;
+    } catch (err) {
+      throw err;
+    }
   }
+  // 导出学生信息
+  // async export() {
+  //   const { ctx } = this;
+
+  // }
 }
 
 module.exports = UserController;
