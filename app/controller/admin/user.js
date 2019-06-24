@@ -7,6 +7,7 @@ const awaitWriteStream = require('await-stream-ready').write;
 const path = require('path');
 const fs = require('fs-extra');
 const nodeXlsx = require('node-xlsx');
+const excelExport = require('excel-export');
 
 class UserController extends Controller {
   // 添加当个学生
@@ -104,10 +105,93 @@ class UserController extends Controller {
     }
   }
   // 导出学生信息
-  // async export() {
-  //   const { ctx } = this;
-
-  // }
+  async export() {
+    const { ctx } = this;
+    console.log(ctx);
+    const users = await ctx.model.User.findAll({
+      where: {},
+      attributes: {
+        exclude: [
+          'password',
+          'created_at',
+          'updated_at',
+        ],
+      },
+    });
+    const allData = [];
+    users.forEach(user => {
+      const temp = [
+        user.name,
+        user.student_id,
+        user.sex,
+        user.id_card,
+        user.account_location,
+        user.tel_num,
+        user.is_dorm,
+        user.address,
+        user.graduated_school,
+        user.guardian_name,
+        user.guardian_tel_num,
+        user.guardian_id_card,
+        user.first_subject,
+        user.second_subject,
+      ];
+      allData.push(temp);
+    });
+    ctx.body = allData;
+    const conf = {
+      cols: [{
+        caption: '姓名',
+        type: 'string',
+      }, {
+        caption: '学号',
+        type: 'string',
+      }, {
+        caption: '性别',
+        type: 'string',
+      }, {
+        caption: '身份证',
+        type: 'string',
+      }, {
+        caption: '户口所在地',
+        type: 'string',
+      }, {
+        caption: '电话号码',
+        type: 'string',
+      }, {
+        caption: '是否内宿',
+        type: 'string',
+      }, {
+        caption: '家庭住址',
+        type: 'string',
+      }, {
+        caption: '毕业学校',
+        type: 'string',
+      }, {
+        caption: '监护人姓名',
+        type: 'string',
+      }, {
+        caption: '监护人电话号码',
+        type: 'string',
+      }, {
+        caption: '监护人身份证',
+        type: 'string',
+      }, {
+        caption: '科目信息一',
+        type: 'string',
+      }, {
+        caption: '科目信息二',
+        type: 'string',
+      }],
+      rows: allData,
+    };
+    ctx.body = conf;
+    const res = excelExport.execute(conf);
+    const data = new Buffer(res, 'binary');
+    ctx.set('Content-Type', 'application/vnd.openxmmlformats:charset:s=utf-8');
+    ctx.set('Content-Disposition', `attachment; filename=${encodeURIComponent('学生信息表')}_${Date.now()}.xlsx`);
+    ctx.body = data;
+  }
 }
 
 module.exports = UserController;
