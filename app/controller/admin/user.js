@@ -14,6 +14,11 @@ class UserController extends Controller {
   async create() {
     const { ctx } = this;
     const body = ctx.request.body;
+    let password = '123456';
+    if (body.id_card) {
+      password = password.substr(password.length - 6);
+    }
+    body.password = password;
     ctx.validate({
       name: {
         require: true,
@@ -30,8 +35,8 @@ class UserController extends Controller {
     const body = ctx.request.body;
     ctx.validate({
       id: {
-        request: true,
-        type: 'string',
+        require: true,
+        type: 'number',
       },
     });
 
