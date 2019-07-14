@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const nodeXlsx = require('node-xlsx');
 const excelExport = require('excel-export');
+const sha256 = require('sha256');
 
 class UserController extends Controller {
   // 添加当个学生
@@ -18,7 +19,7 @@ class UserController extends Controller {
     if (body.id_card) {
       password = password.substr(password.length - 6);
     }
-    body.password = password;
+    body.password = sha256(password);
     ctx.validate({
       name: {
         require: true,
@@ -45,7 +46,29 @@ class UserController extends Controller {
       ctx.status = 404;
       return;
     }
-    await user.update(body);
+    const data = Object.assign({}, body);
+    if (data.password) {
+      delete data.password;
+    }
+    await user.update(data);
+    ctx.body = user;
+  }
+  // 删除学生信息
+  async remove() {
+    const { ctx } = this;
+    const body = ctx.request.body;
+    ctx.validate({
+      id: {
+        require: true,
+        type: 'number',
+      },
+    });
+
+    const user = await ctx.model.User.destroy({
+      where: {
+        id: body.id,
+      },
+    });
     ctx.body = user;
   }
   // 获取学生列表
@@ -89,7 +112,7 @@ class UserController extends Controller {
           id_card: msg[1],
           student_id: msg[2],
           sex: msg[3],
-          password: msg[1].substr(msg[1].length - 6),
+          password: sha256(msg[1].substr(msg[1].length - 6)),
         };
       });
       users.forEach(async user => {

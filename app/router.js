@@ -23,12 +23,16 @@ module.exports = app => {
         prefix: '/auth',
         middlewares: [ jwt, admin ],
       }, router => {
+        // 管理员更改密码
+        router.post('/password/reset', controller.admin.admin.reset_password);
         // 获取学生列表
         router.get('/users', controller.admin.user.index);
         // 更新单个学生信息
         router.put('/user', controller.admin.user.update);
         // 添加单个学生
         router.post('/user', controller.admin.user.create);
+        // 删除单个学生
+        router.delete('/user', controller.admin.user.remove);
         // 批量导入excel更新用户信息
         router.post('/user/import', controller.admin.user.import);
         router.get('/user/export', controller.admin.user.export);

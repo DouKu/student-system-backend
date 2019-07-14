@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const sha256 = require('sha256');
 
 class UserController extends Controller {
   // 学生登录
@@ -25,7 +26,7 @@ class UserController extends Controller {
           { id_card: body.account },
           { student_id: body.account },
         ],
-        password: body.password,
+        password: sha256(body.password),
       },
     });
     if (!user) {
@@ -92,7 +93,9 @@ class UserController extends Controller {
 
     const data = Object.assign({}, body);
     data.second_subject = data.second_subject.join(',');
-
+    if (data.password) {
+      delete data.password;
+    }
     const user = await ctx.model.User.findById(userId);
     if (!user) {
       ctx.status = 403;
