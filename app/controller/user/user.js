@@ -108,6 +108,7 @@ class UserController extends Controller {
   async get() {
     const { ctx } = this;
     const { userId } = ctx;
+    console.log(userId, 'ddddddddddddddddddddd');
     const user = await ctx.model.User.findOne({
       where: {
         id: userId,
@@ -126,9 +127,10 @@ class UserController extends Controller {
       ctx.status = 404;
       return;
     }
-    ctx.body = Object.assign({}, user, {
+    const data = Object.assign({}, {
       choose: admin[0].choose,
-    });
+    }, user.toJSON());
+    ctx.body = data;
   }
 }
 
