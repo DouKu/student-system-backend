@@ -69,6 +69,16 @@ class AdminController extends Controller {
       ctx.status = 404;
     }
   }
+  async switchChoose() {
+    const { ctx } = this;
+    const id = ctx.userId;
+    const admin = await ctx.model.Admin.findById(id);
+    const choose = admin.choose === 1 ? 0 : 1;
+    admin.update({
+      choose,
+    });
+    ctx.body = 'switch success';
+  }
 }
 
 module.exports = AdminController;

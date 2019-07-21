@@ -10,6 +10,7 @@ module.exports = app => {
     password: STRING,
     created_at: DATE,
     updated_at: DATE,
+    choose: INTEGER,
   });
 
   return Admin;

@@ -36,6 +36,7 @@ module.exports = app => {
         // 批量导入excel更新用户信息
         router.post('/user/import', controller.admin.user.import);
         router.get('/user/export', controller.admin.user.export);
+        router.post('/switch/choose', controller.admin.admin.switchChoose);
       });
     });
 

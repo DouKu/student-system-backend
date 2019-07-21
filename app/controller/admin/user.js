@@ -74,9 +74,15 @@ class UserController extends Controller {
   // 获取学生列表
   async index() {
     const { ctx } = this;
-    const { query } = ctx;
+    const { query, admin } = ctx;
+    const search = {};
+    if (query.keyword) {
+      search.id_card = query.keyword;
+    }
     const users = await ctx.model.User.findAll({
-      where: query,
+      limit: parseInt(query.limit) || 10,
+      offset: parseInt(query.offset) || 0,
+      where: search,
       attributes: {
         exclude: [
           'password',
@@ -85,7 +91,13 @@ class UserController extends Controller {
         ],
       },
     });
-    ctx.body = users;
+
+    const total = await ctx.model.User.count();
+    ctx.body = {
+      choose: admin.choose,
+      users,
+      total,
+    };
   }
   // 批量导入学生信息
   async import() {

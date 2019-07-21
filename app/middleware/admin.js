@@ -8,7 +8,13 @@ module.exports = () => {
         id,
         role: 0,
       },
+      attributes: {
+        exclude: [
+          'password',
+        ],
+      },
     });
+    ctx.admin = admin;
     if (!admin) {
       return 401;
     }

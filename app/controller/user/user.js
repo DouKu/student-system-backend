@@ -121,11 +121,14 @@ class UserController extends Controller {
         ],
       },
     });
+    const admin = await ctx.model.Admin.findAll();
     if (!user) {
       ctx.status = 404;
       return;
     }
-    ctx.body = user;
+    ctx.body = Object.assign({}, user, {
+      choose: admin[0].choose,
+    });
   }
 }
 
