@@ -26,7 +26,7 @@ class UserController extends Controller {
           { id_card: body.account },
           { student_id: body.account },
         ],
-        password: sha256(body.password),
+        password: sha256(body.password.toUpperCase()),
       },
     });
     if (!user) {
