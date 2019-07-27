@@ -17,7 +17,7 @@ class UserController extends Controller {
     const body = ctx.request.body;
     let password = '123456';
     if (body.id_card) {
-      password = password.substr(password.length - 6);
+      password = body.id_card.substr(body.id_card.length - 6);
     }
     body.password = sha256(password);
     ctx.validate({
