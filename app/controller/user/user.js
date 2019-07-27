@@ -81,14 +81,6 @@ class UserController extends Controller {
         require: true,
         type: 'string',
       },
-      first_subject: {
-        require: true,
-        type: 'string',
-      },
-      second_subject: {
-        require: true,
-        type: 'array',
-      },
     }, body);
 
     const data = Object.assign({}, body);
