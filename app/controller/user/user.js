@@ -84,7 +84,9 @@ class UserController extends Controller {
     }, body);
 
     const data = Object.assign({}, body);
-    data.second_subject = data.second_subject.join(',');
+    if (data.second_subject) {
+      data.second_subject = data.second_subject.join(',');
+    }
     if (data.password) {
       delete data.password;
     }
