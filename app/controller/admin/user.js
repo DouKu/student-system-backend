@@ -168,6 +168,9 @@ class UserController extends Controller {
         user.account_location,
         user.tel_num,
         user.is_dorm,
+        user.is_create_file,
+        user.is_subsistence,
+        user.is_disability,
         user.address,
         user.graduated_school,
         user.guardian_name,
@@ -200,6 +203,15 @@ class UserController extends Controller {
         type: 'string',
       }, {
         caption: '是否内宿',
+        type: 'string',
+      }, {
+        caption: '是否建档立卡贫困户',
+        type: 'string',
+      }, {
+        caption: '是否低保户',
+        type: 'string',
+      }, {
+        caption: '是否残疾生',
         type: 'string',
       }, {
         caption: '家庭住址',

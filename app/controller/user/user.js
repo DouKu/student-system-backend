@@ -69,6 +69,18 @@ class UserController extends Controller {
         require: true,
         type: 'string',
       },
+      is_create_file: {
+        require: true,
+        type: 'string',
+      },
+      is_subsistence: {
+        require: true,
+        type: 'string',
+      },
+      is_disability: {
+        require: true,
+        type: 'string',
+      },
       guardian_name: {
         require: true,
         type: 'string',
@@ -102,7 +114,6 @@ class UserController extends Controller {
   async get() {
     const { ctx } = this;
     const { userId } = ctx;
-    console.log(userId, 'ddddddddddddddddddddd');
     const user = await ctx.model.User.findOne({
       where: {
         id: userId,
