@@ -17,7 +17,7 @@ class UserController extends Controller {
     const body = ctx.request.body;
     let password = '123456';
     if (body.id_card) {
-      password = body.id_card.substr(body.id_card.length - 6);
+      password = body.id_card.substr(6, 8);
     }
     body.password = sha256(password);
     ctx.validate({
@@ -124,7 +124,7 @@ class UserController extends Controller {
           id_card: msg[1],
           student_id: msg[2],
           sex: msg[3],
-          password: sha256(msg[1].substr(msg[1].length - 6)),
+          password: sha256(msg[1].substr(6, 8)),
         };
       });
       users.forEach(async user => {
