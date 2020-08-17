@@ -12,7 +12,10 @@ module.exports = app => {
     password: STRING, // 密码
     account_location: STRING, // 户口所在地
     tel_num: STRING, // 电话号码
-    is_dorm: INTEGER, // 是否内宿
+    is_dorm: STRING, // 是否内宿
+    is_create_file: STRING,
+    is_subsistence: STRING,
+    is_disability: STRING,
     address: STRING, // 家庭住址
     graduated_school: STRING, // 毕业学校
     guardian_name: STRING(30), // 监护人姓名
